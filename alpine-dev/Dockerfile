@@ -1,4 +1,4 @@
-FROM alpine:latest as builder
+FROM alpine:latest
 
 LABEL app.name="alpine-dev"
 LABEL app.desc="Alpine based development environment"
@@ -18,6 +18,7 @@ RUN \
         man-pages   \
         less        \
         gzip        \
+        bzip2       \
         zip         \
         zlib        \
         \
@@ -34,9 +35,7 @@ RUN \
         git   \
         yaml  \
         fzf   \
-        ctags
-
-RUN apk --update --no-cache add \
+        ctags \
     --virtual build-deps \
         build-base  \
         autoconf    \
