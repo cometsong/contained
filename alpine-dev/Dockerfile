@@ -36,6 +36,8 @@ RUN \
         yaml  \
         fzf   \
         ctags \
+        && \
+    apk --update --no-cache add \
     --virtual build-deps \
         build-base  \
         autoconf    \
