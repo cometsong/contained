@@ -1,10 +1,9 @@
 FROM cometsong/alpine-dev:latest
 
-#container: vim-base
-
 ARG vim_feats=huge
 ARG py3_ver=3.8
-ENV py3_config /usr/lib/python${py3_ver}/config-${py3_ver}-x86_64-linux-gnu
+ENV py3_cfg=/usr/lib/python${py3_ver}/config-${py3_ver}-x86_64-linux-gnu
+ENV lua_ver=5.3
 
 LABEL app.name="vim"
 LABEL app.desc="Vim! 'Nuf said."
@@ -14,7 +13,6 @@ LABEL maintainer="cometsong <benjamin at cometsong dot net>"
 WORKDIR /tmp
 
 RUN \
-    cd /tmp && \
 # build latest vim with specific options
     git clone https://github.com/vim/vim && \
     cd vim && \
@@ -26,20 +24,19 @@ RUN \
     --enable-gui=gtk3 \
     \
     --enable-luainterp \
-    --with-lua-prefix=/usr/lua5.3 \
+    --with-lua-prefix=/usr/lua${lua_ver} \
     --enable-perlinterp \
     --enable-rubyinterp \
     --enable-python3interp \
-    --with-python3-config-dir=${py3_config} \
+    --with-python3-config-dir=${py3_cfg} \
     \
     --with-features=${vim_feats} \
     --with-compiledby=cometsong && \
-    make install
-
+    make && \
+    make install && \
 # cleanup
-#RUN \
-#    cd /tmp && \
-#    rm -rf vim
+    cd /tmp && rm -rf vim \
+    apk-pkg-cleanup
 
 ENTRYPOINT ["vim"]
 

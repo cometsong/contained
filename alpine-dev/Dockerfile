@@ -5,6 +5,7 @@ LABEL app.desc="Alpine based development environment"
 LABEL maintainer="cometsong <benjamin at cometsong dot net>"
 
 WORKDIR /tmp
+ENV lua_ver=5.3
 
 RUN \
 # add runtime and build dependencies
@@ -26,11 +27,11 @@ RUN \
         perl        \
         python3     \
         ruby        \
-        lua5.3      \
-        lua5.3-stdlib  \
-        lua5.3-libs    \
-        lua5.3-cliargs \
-        lua5.3-sqlite  \
+        lua${lua_ver}         \
+        lua${lua_ver}-stdlib  \
+        lua${lua_ver}-libs    \
+        lua${lua_ver}-cliargs \
+        lua${lua_ver}-sqlite  \
         jq    \
         git   \
         yaml  \
@@ -51,10 +52,10 @@ RUN \
         ncurses-dev \
         yaml-dev    \
         sqlite-dev  \
-        lua5.3-dev  \
         perl-dev    \
         python3-dev \
-        ruby-dev
+        ruby-dev    \
+        lua${lua_ver}-dev
 
 # cleanup script can be used in child containers
 RUN \
