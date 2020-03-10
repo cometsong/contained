@@ -33,7 +33,9 @@ dock_build_img(){
   declare ImgDir="${1?'Usage: dock_build_img <image_folder_name> [tag(latest)]'}"
   declare ImgTag=":${2:-latest}"
   declare DockImg=${DOCKER_REPO_PREFIX}${ImgDir,,}${ImgTag}
-  echo docker build -t ${DockImg} ${ImgDir}/
+  echo "Running:
+  docker build -t ${DockImg} ${ImgDir}/"
+  docker build -t ${DockImg} ${ImgDir}/
   if [[ $? = 0 ]]; then
     # test resulting image's container commands...
     echo;echo "Test running: docker run ${DockImg}"
