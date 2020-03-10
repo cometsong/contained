@@ -1,4 +1,4 @@
-FROM cometsong/alpine-dev:latest
+FROM cometsong/alpine-dev:3.11.3
 
 ARG vim_feats=huge
 ARG py3_ver=3.8
@@ -17,11 +17,16 @@ RUN \
     git clone https://github.com/vim/vim && \
     cd vim && \
     ./configure \
+    --enable-terminal        \
+    --enable-gui=gtk3        \
+    --enable-fontset         \
+    \
     --enable-fail-if-missing \
-    --disable-netbeans \
-    --enable-multibyte \
-    --enable-terminal \
-    --enable-gui=gtk3 \
+    \
+    --disable-netbeans       \
+    --disable-arabic         \
+    --disable-farsi          \
+    --disable-rightleft      \
     \
     --enable-luainterp \
     --with-lua-prefix=/usr/lua${lua_ver} \
@@ -32,12 +37,16 @@ RUN \
     \
     --with-features=${vim_feats} \
     --with-compiledby=cometsong && \
+    \
     make && \
     make install && \
 # cleanup
-    cd /tmp && rm -rf vim \
-    apk-pkg-cleanup
+    cd /tmp 
+    #&& rm -rf vim
+    #&& \
+    #apk-pkg-cleanup
 
 ENTRYPOINT ["vim"]
+CMD ["--version"]
 
 #  vim: set ft=Dockerfile ts=4 sw=0 tw=100 et fdm=manual:
