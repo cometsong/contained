@@ -1,4 +1,5 @@
-FROM alpine:latest
+#FROM alpine:latest
+FROM alpine:3.11.3
 
 LABEL app.name="alpine-dev"
 LABEL app.desc="Alpine based development environment"
@@ -13,6 +14,7 @@ RUN \
     apk --no-cache add \
         bash        \
         libxml2     \
+        yaml        \
         gtk+3.0     \
         sqlite      \
         man         \
